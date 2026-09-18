@@ -1,41 +1,33 @@
 # R-Python-infercnv-copykat-workflow-template
 
-inferCNV 与 CopyKAT 肿瘤拷贝数分析代码素材模板。
+独立 RNA-CNV 分析仓库。每种方法对应一个根目录完整脚本，直接接收主流程输出：
 
-## 正式 Python 入口
+- infercnv_workflow.R：Seurat RDS + gene-order 文件，运行 Broad inferCNV。
+- copykat_workflow.R：Seurat RDS，按样本分别运行 CopyKAT。
+- infercnvpy_workflow.py：AnnData h5ad + GTF/BioMart 坐标，运行 infercnvpy。
 
-`specific/infercnv.ipynb` 已转换为根目录的 `infercnvpy_workflow.py`，正式分析不再使用 notebook。reference cell types、物种、窗口和输出路径均通过参数指定：
+## inferCNV
 
-```bash
-python infercnvpy_workflow.py \
-  --input-h5ad data/processed/annotated.h5ad \
-  --celltype-col cell_type \
-  --references Macrophage,T,DC,B,Endothelial \
-  --species mmusculus
-```
+    Rscript infercnv_workflow.R --input annotated.rds --gene-order gene_order.tsv --output results/infercnv --references "T cell,B cell,Endothelial cell"
 
-默认输出：
+输入必须使用 raw counts。gene-order 文件必须与物种、gene ID 和基因组版本一致；正常 reference 需要由 marker 和样本来源支持。
 
-- 图表和 metadata：`results/06_infercnv_copykat/infercnvpy/`
-- 完整对象：`data/processed/infercnvpy.h5ad`
-- 每张正式图均保存 PDF 和 300-dpi PNG。
-- `README_results_CN.md` 会记录 reference、物种、window size 和主要限制。
+## CopyKAT
 
-基因位置默认通过 Biomart 查询；`mmusculus + external_gene_name` 对应原 notebook 的小鼠 gene symbol 用法。人类数据应改为匹配的 species 和 gene identifier。
-## 主要代码
+    Rscript copykat_workflow.R --input annotated.rds --output results/copykat --sample-col orig.ident --references "T cell,B cell"
 
-- `infercnv/infercnv_seurat.R`：基于 Seurat 对象的 inferCNV 流程。
-- `infercnv/examples/`：项目示例。
-- `infercnv/report.rmd`：结果报告模板。
-- `copykat/copykat_20260317.R`：CopyKAT 分析示例。
-- `infercnv/pip_infercnv.py`、`platform_wrappers/`：原平台封装。
+CopyKAT 官方建议每个样本单独运行，合并样本可能把批次差异误判为 CNV。脚本会按 sample-col 自动拆分。human 使用 genome=hg20，mouse 使用 genome=mm10；小鼠预测需要额外目视检查。
 
-## 使用前注意
+## infercnvpy
 
-`infercnv_seurat.R` 会查找单细胞模板中的 `00_functions.R`；在新项目中应从 `R-scrna-workflow-template` 选择相应公共函数。CopyKAT 示例含固定输入对象、reference cell type 和项目参数，运行前必须改为当前项目设置。
+    python infercnvpy_workflow.py --input-h5ad annotated.h5ad --output-dir results/infercnvpy --celltype-col cell_type --references "T cell,B cell" --gtf genes.gtf
 
-原始精选脚本保存在 `../R-Python-bioinformatics-code-archive/legacy/original/06_infercnv_copykat/`；specific notebook 原稿保存在 `../R-Python-bioinformatics-code-archive/legacy/original/specific/infercnv.ipynb`。
+本地 GTF 更便于固定基因组版本。若输入层是 raw counts，可增加 --layer counts --normalize；若 X 已为 log-normalized expression，则不增加 --normalize。
 
-## 其他人员来源代码
+## 解释边界
 
-`source_catalog/` 收录 78 份 inferCNV/CopyKAT 语义副本，并在 `SOURCE_CATALOG.tsv` 中区分 inferCNV 与 CopyKAT、owner、场景和哈希。根目录现有脚本仍作为首选素材，来源版本用于补充不同 reference、物种和平台实现。
+三种方法都根据 RNA 表达推断相对 CNV，不能替代 DNA 测序。正常 reference、基因组坐标和物种是关键分析假设。不要把单细胞 CNV score 当作生物学重复进行条件显著性检验。
+
+legacy/original/ 保存旧项目脚本，source_catalog/ 保存来源语义副本，均不作为正式入口。
+
+方法依据：inferCNV 官方 Wiki、infercnvpy 官方文档和 CopyKAT 论文（PMID: 33462507）。
