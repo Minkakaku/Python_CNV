@@ -16,10 +16,11 @@ split_values <- function(x) {
   if (is.null(x) || x == "") character(0) else trimws(strsplit(x, ",", fixed = TRUE)[[1]])
 }
 
-# 功能：同时保存矢量 PDF 和 300 dpi PNG。
+# 功能：同时保存矢量 PDF 和 600 dpi PNG。
 save_plot <- function(plot, stem, width = 8, height = 7) {
+  plot <- plot + ggplot2::labs(subtitle = NULL) + ggplot2::theme(plot.subtitle = ggplot2::element_blank())
   ggplot2::ggsave(paste0(stem, ".pdf"), plot, width = width, height = height)
-  ggplot2::ggsave(paste0(stem, ".png"), plot, width = width, height = height, dpi = 300)
+  ggplot2::ggsave(paste0(stem, ".png"), plot, width = width, height = height, dpi = 600)
 }
 
 # 功能：提取 Seurat v5 合并后的原始 counts layer。
@@ -141,8 +142,8 @@ run_copykat <- function(
       obj,
       reduction = "umap",
       group.by = "copykat_prediction",
-      raster = TRUE,
-      cols = c(aneuploid = "#CD5C5C", diploid = "#72b1b9", "not.defined" = "#BDBDBD")
+      raster = FALSE,
+      cols = c(aneuploid = "#E64B35", diploid = "#4DBBD5", "not.defined" = "#BDBDBD")
     ) + ggplot2::coord_fixed()
     save_plot(plot, file.path(output_dir, "UMAP_copykat_prediction"))
   }
