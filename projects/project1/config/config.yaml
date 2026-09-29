@@ -1,0 +1,7 @@
+methods:
+  infercnvpy:
+    input-h5ad: data/processed/annotated.h5ad
+    gtf: data/reference/genes.gtf
+    references: T cell,B cell
+    output-dir: results/10_infercnvpy
+    object-out: data/processed/10_infercnvpy.h5ad

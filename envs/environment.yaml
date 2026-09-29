@@ -1,0 +1,13 @@
+name: python-cnv
+channels:
+- conda-forge
+- bioconda
+dependencies:
+- python=3.11
+- scanpy>=1.10
+- pandas>=2
+- matplotlib>=3.8
+- pip
+- pip:
+  - infercnvpy>=0.6
+- pyyaml
