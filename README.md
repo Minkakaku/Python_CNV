@@ -4,6 +4,10 @@
 
 本仓库由 `R-Python-infercnv-copykat-workflow-template` 按语言拆分；另一语言版本见 [R_CNV](https://github.com/Minkakaku/R_CNV)。保留拆分前提交历史；`legacy/` 和 `source_catalog/` 是原样来源档案，可能包含另一语言，不参与正式执行。
 
+## 公司平台报告与结果档案
+
+按用户明确要求收录 [scVision5 两套结果](examples/scvision5/README.md)：公司原始示例及 GSE160269 全队列结果，包含原 HTML、PNG/PDF 与注释表；原版 [report.rmd 及使用说明](templates/scvision5/README.md) 一并提供。此处是结果归档的明确例外，其余实际项目仍保持本地管理。原报告与 Rmd 未改写，没有重新运行分析。
+
 ## 集中项目规范
 
 每个项目在 `logs/README.md` 维护唯一的项目总记录，汇总项目概况并按时间追加所有操作，包括检查、依赖与代码变更、参数调整、人工决策、运行、失败、重跑和结果核对；每条注明时间与时区、目的、脚本或命令、输入与参数、代码和环境版本、状态、日志及固定结果路径。根目录 README 作为入口和运行索引，链接到总记录。总记录纳入项目本地 Git，原始运行日志忽略；项目内容不上传 GitHub。

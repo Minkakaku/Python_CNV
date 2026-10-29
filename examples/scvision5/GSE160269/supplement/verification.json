@@ -1,0 +1,44 @@
+{
+  "state": "passed",
+  "analytical_checks": "passed",
+  "visual_review": "passed",
+  "model_calls": 1,
+  "input_cells": 51571,
+  "epithelial": 43834,
+  "shared_reference_cells": 7737,
+  "samples": 64,
+  "CNV_clusters": 60,
+  "CNV_windows": 2354,
+  "counts": {
+    "tumor": 34601,
+    "normal": 10333,
+    "uncertain": 6637
+  },
+  "user_approved": true,
+  "original_annotation_AST_executed": true,
+  "original_make_report_executed": true,
+  "source_annotation_lines": [
+    191,
+    197
+  ],
+  "RNA_UMAP_includes_epithelial_and_macrophage": true,
+  "all_unassigned_placeholder_removed": true,
+  "original_input_preserved": true,
+  "report_embedded_scientific_images": 7,
+  "html_total_base64_png_strings": 9,
+  "report_sha256": "0de6df97c78c02d966ec796d80372de4a9ca221caaeaa8dbd554384acbea6fed",
+  "template_sha256": "60fbdbcac5337961d328c82185fd9192eb8e9bd4fa4e0a85295fe46a6ab091d1",
+  "biological_validity": "User-approved conservative cluster annotation; RNA inference, not DNA validated",
+  "validation_note": "62 original report generation succeeded; its generic base64 count assertion counted two DT CSS icons. 62b verifies the seven IMG elements and completes exports without re-rendering.",
+  "visual_review_at": "2026-10-28T15:44:35.307964+08:00",
+  "visual_checks": [
+    "Original report viewed in localhost browser; seven scientific images loaded",
+    "RNA UMAP includes gray macrophage island and Epi1-Epi16",
+    "CNV UMAP and by-cell/by-cluster tabs display original plots",
+    "Annotation UMAP shows blue normal, orange tumor and green uncertain",
+    "Live searchable table: total 51571, Macrophage 7737, Epi16 143, uncertain 6637",
+    "Separate Ref/Epi violin visually checked for all 17 groups"
+  ],
+  "delivery_layout": "User sample: report.html + CNV/; 25 ZIP entries including CNV directory",
+  "delivery_metadata_status_alias": "cnv_status is the approved inferCNV annotation; original tables untouched"
+}

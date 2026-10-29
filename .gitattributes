@@ -9,3 +9,7 @@
 *.tsv text eol=lf
 source_catalog/** -text
 legacy/original/** -text
+
+# Preserve archived reports, tables and original Rmd bytes
+examples/scvision5/** -text
+templates/scvision5/report.rmd -text
